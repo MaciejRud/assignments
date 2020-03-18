@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 18 16:08:12 2020
+
+@author: mrudo
+"""
+
 from typing import List
 import pandas as pd
 import datetime
@@ -17,7 +24,6 @@ dfD = pd.read_csv(url, error_bad_lines=False)
 url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/a9f182afe873ce7e65d2307fcf91013c23a4556c" \
       f"/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv "
 dfR = pd.read_csv(url, error_bad_lines=False)
-
 
 # Helper function (strftime not cross platform) ???
 def format_date(date: datetime.date):
@@ -42,6 +48,17 @@ def countries_with_no_deaths_count(date: datetime.date) -> int:
     
     # Your code goes here
     pass
+    day0=format_date(date)
+    
+    chorzy=pd.DataFrame(dfC[day0]).T
+    zmarli=pd.DataFrame(dfR[day0]).T
+    licznik = 0
+    for i in chorzy:
+        if chorzy[i].values!=0 and zmarli[i].values==0:
+            licznik=licznik+1
+    
+    return licznik
+
 
 
 def more_cured_than_deaths_indices(date: datetime.date) -> List[int]:
